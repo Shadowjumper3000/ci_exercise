@@ -9,7 +9,8 @@ def reverse_string(s: str) -> str:
 def is_palindrome(s: str) -> bool:
     """Check if a string is a palindrome (case-insensitive)."""
     cleaned = s.lower().replace(" ", "")
-    return cleaned == cleaned[::-1]
+    # BUG: Wrong comparison - comparing to original instead of reversed!
+    return cleaned == s
 
 
 def count_vowels(s: str) -> int:
