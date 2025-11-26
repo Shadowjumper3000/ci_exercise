@@ -1,7 +1,11 @@
 """Unit tests for the string_utils module."""
 
-import pytest
-from src.string_utils import reverse_string, is_palindrome, count_vowels, capitalize_words
+from src.string_utils import (
+    reverse_string,
+    is_palindrome,
+    count_vowels,
+    capitalize_words,
+)
 
 
 class TestReverseString:
