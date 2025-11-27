@@ -1,0 +1,49 @@
+# CI Pipeline - Step 1: Running Tests
+# This workflow runs unit tests on every push and pull request
+
+name: CI Pipelin
+
+on:
+  push:
+    branches: [main, 01-tests]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    name: Run Tests
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Check out the repository code
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # Step 2: Set up Python environment
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      # Step 3: Install dependencies
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements-dev.txt
+
+      # Step 4: Run tests with pytest
+      - name: Run tests
+        run: |
+          pytest --verbose --tb=short
+
+      # Step 5: Run tests with coverage report
+      - name: Run tests with coverage
+        run: |
+          pytest --cov=src --cov-report=term-missing --cov-report=xml
+
+      # Step 6: Upload coverage report as artifact
+      - name: Upload coverage report
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-report
+          path: coverage.xml
